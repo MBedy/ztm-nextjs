@@ -3,12 +3,9 @@ import styles from "../styles/Home.module.css";
 
 import Banner from "../components/banner/banner";
 import NavBar from "../components/nav/navbar";
-import Card from "../components/card/card";
 import SectionCards from "../components/card/section-cards";
 
 import { getPopularVideos, getVideos } from "../lib/videos";
-
-import { magic } from "../lib/magic-client";
 
 export async function getServerSideProps(context) {
   const disneyVideos = await getVideos("disney trailer");
