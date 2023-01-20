@@ -5,9 +5,27 @@ import Banner from "../components/banner/banner";
 import NavBar from "../components/nav/navbar";
 import SectionCards from "../components/card/section-cards";
 
-import { getPopularVideos, getVideos } from "../lib/videos";
+import {
+  getPopularVideos,
+  getVideos,
+  getWatchItAgainVideos,
+} from "../lib/videos";
+import { redirectUser } from "../utils/redirectUser";
 
 export async function getServerSideProps(context) {
+  const { userId, token } = await redirectUser(context);
+
+  if (!userId) {
+    return {
+      props: {},
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  const watchItAgainVideos = await getWatchItAgainVideos(userId, token);
+
   const disneyVideos = await getVideos("disney trailer");
   const productivityVideos = await getVideos("Productivity");
 
@@ -16,7 +34,13 @@ export async function getServerSideProps(context) {
   const popularVideos = await getPopularVideos();
 
   return {
-    props: { disneyVideos, travelVideos, productivityVideos, popularVideos },
+    props: {
+      disneyVideos,
+      travelVideos,
+      productivityVideos,
+      popularVideos,
+      watchItAgainVideos,
+    },
   };
 }
 
@@ -25,6 +49,7 @@ export default function Home({
   travelVideos,
   productivityVideos,
   popularVideos,
+  watchItAgainVideos,
 }) {
   return (
     <div className={styles.container}>
@@ -44,6 +69,11 @@ export default function Home({
 
         <div className={styles.sectionWrapper}>
           <SectionCards title="Disney" videos={disneyVideos} size="large" />
+          <SectionCards
+            title="Watch it again"
+            videos={watchItAgainVideos}
+            size="small"
+          />
           <SectionCards title="Travel" videos={travelVideos} size="small" />
           <SectionCards
             title="Productivity"

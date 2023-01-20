@@ -8,11 +8,8 @@ export default async function login(req, res) {
     try {
       const auth = req.headers.authorization;
       const didToken = auth ? auth.substr(7) : "";
-      console.log({ didToken });
-      const metadata = await magicAdmin.users.getMetadataByToken(
-        "WyIweGNkMTFlYTU3YWQyYTI0NWNkODE5NDhiNDA3NzM1ZmEyNjM2YWRkZDg2Mzc2MWNkZDc1ZjA0NzRkMjlkOTBmZTI0ZGViZmZiMGJkMzQ4ZTU4MmE4ZmNkNTgyNDk5NzM2ZDQ1NmU2MmI1YThlOTExZWQwM2Y2Y2YxYjUxZDllZDA4MWMiLCJ7XCJpYXRcIjoxNjczOTkwODYwLFwiZXh0XCI6MTY3Mzk5MTc2MCxcImlzc1wiOlwiZGlkOmV0aHI6MHgwMjMwOEIxMTk4NTc3RDNFNDgyZEE4NTFiOTlmNzUyNGRBNjhFZUY4XCIsXCJzdWJcIjpcIjhKbHhGcnIwQ0pMRnhiU1cwd1NBb0RBTU9od0pLWllSak1hRkxmU2pIa1k9XCIsXCJhdWRcIjpcInRxa0VNa1M2VlNhalgxRUtZaHZFeGwwbHJQeTdtbHJibHkyZFU0Z2x1c1k9XCIsXCJuYmZcIjoxNjczOTkwODYwLFwidGlkXCI6XCIxMWFjZTE4Ni04MWYwLTRmMzgtOWUwYS01MDBjOWRiNzdhM2JcIixcImFkZFwiOlwiMHgwMmQ5NGRlOTQyNmU4NzkyNTU4YTQyNWE2M2I4MzEzNWE0OTIzZTQ3NGFlMjc1ODc3OTk3MjQ2NWU1NDdmMjkxMjc4ZjMxODdlNmI5YmUyNDYwNmY1ZGIyZWUzMTZjNzFhZWZlOGU1YjIyZDA2ZTNkMmUwMTVmNGQ0ZjcyNGUxZjFiXCJ9Il0="
-      );
-      console.log({ metadata });
+
+      const metadata = await magicAdmin.users.getMetadataByToken(didToken);
 
       const token = jwt.sign(
         {
